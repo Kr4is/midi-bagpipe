@@ -12,11 +12,16 @@ const uint16_t fingering_positions[]={
   2298, // MIb -> FA
   2296, // MI -> FA#
   2288, // FA -> SOL
+  2287, // SOL -> LA (DO#)
+  2286, // SOL -> LA (RE)
+  2284, // SOL -> LA (MI)
+  2280, // SOL -> LA (FA)
   2272, // SOL -> LA
+  2256, // LAb -> SIb (SOL)
   2260, // LAb -> SIb
   2240, // LA -> SI
   2242, // LA -> SI
-  //2208, // SIb -> DO
+  2208, // SIb -> DO
   2210, // SIb -> DO
   2176, // SI -> DO#
   2178, // SI -> DO#
@@ -37,10 +42,16 @@ char notes[][20]={
   "MIb -> FA",
   "MI -> FA#",
   "FA -> SOL",
+  "SOL -> LA (DO#)",
+  "SOL -> LA (RE)",
+  "SOL -> LA (MI)",
+  "SOL -> LA (FA)",
   "SOL -> LA",
+  "LAb -> SIb (SOL)",
   "LAb -> SIb",
   "LA -> SI",
   "LA -> SI",
+  "SIb -> DO",
   "SIb -> DO",
   "SI -> DO#",
   "SI -> DO#",
@@ -63,10 +74,16 @@ const uint16_t midi_notes[]={
   63, // MIb -> FA
   64, // MI -> FA#
   65, // FA -> SOL
+  67, // SOL -> LA (DO#)
+  67, // SOL -> LA (RE)
+  67, // SOL -> LA (MI)
+  67, // SOL -> LA (FA)
   67, // SOL -> LA
+  68, // LAb -> SIb (SOL)
   68, // LAb -> SIb
   69, // LA -> SI
   69, // LA -> SI
+  70, // SIb -> DO
   70, // SIb -> DO
   71, // SI -> DO#
   71, // SI -> DO#
@@ -114,8 +131,8 @@ void loop() {
   currtouched = cap.touched();
   Serial.println(currtouched);
 
-  uint8_t new_note = 19;
-  for (uint8_t i = 0; i < 18; i++) {
+  uint8_t new_note = 25;
+  for (uint8_t i = 0; i < 24; i++) {
     if (currtouched == fingering_positions[i]){
       new_note = i;
       break;
@@ -124,11 +141,11 @@ void loop() {
   //Serial.print("New note ");Serial.println(notes[new_note]);
 
   if (new_note != last_note) {
-    if (last_note != 19){
+    if (last_note != 25){
       //Serial.print("Stopping ");Serial.println(notes[last_note]);
       MIDI.sendNoteOff(midi_notes[last_note], 127, 1);
     }
-    if (new_note != 19){
+    if (new_note != 25){
       //Serial.print("Sending ");Serial.println(notes[new_note]);
       MIDI.sendNoteOn(midi_notes[new_note], 127, 1);
     }
@@ -139,5 +156,5 @@ void loop() {
   return;
 
   // put a delay so it isn't overwhelming
-  delay(10);
+  delay(1);
 }
