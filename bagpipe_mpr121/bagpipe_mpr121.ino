@@ -11,6 +11,7 @@ const uint16_t fingering_positions[]={
   2300, // RE -> MI
   2298, // MIb -> FA
   2296, // MI -> FA#
+  2292, // FA -> SOL (SIb)
   2290, // FA -> SOL
   2288, // FA -> SOL
   2287, // SOL -> LA (DO#)
@@ -44,6 +45,7 @@ char notes[][20]={
   "RE -> MI",
   "MIb -> FA",
   "MI -> FA#",
+  "FA -> SOL (SIb)",
   "FA -> SOL",
   "FA -> SOL",
   "SOL -> LA (DO#)",
@@ -79,6 +81,7 @@ const uint16_t midi_notes[]={
   62, // RE -> MI
   63, // MIb -> FA
   64, // MI -> FA#
+  65, // FA -> SOL (SIb)
   65, // FA -> SOL
   65, // FA -> SOL
   67, // SOL -> LA (DO#)
@@ -140,8 +143,8 @@ void loop() {
   currtouched = cap.touched();
   Serial.println(currtouched);
 
-  uint8_t new_note = 27;
-  for (uint8_t i = 0; i < 26; i++) {
+  uint8_t new_note = 30;
+  for (uint8_t i = 0; i < 29; i++) {
     if (currtouched == fingering_positions[i]){
       new_note = i;
       break;
@@ -150,11 +153,11 @@ void loop() {
   //Serial.print("New note ");Serial.println(notes[new_note]);
 
   if (new_note != last_note) {
-    if (last_note != 27){
+    if (last_note != 30){
       //Serial.print("Stopping ");Serial.println(notes[last_note]);
       MIDI.sendNoteOff(midi_notes[last_note], 127, 1);
     }
-    if (new_note != 27){
+    if (new_note != 30){
       //Serial.print("Sending ");Serial.println(notes[new_note]);
       MIDI.sendNoteOn(midi_notes[new_note], 127, 1);
     }
