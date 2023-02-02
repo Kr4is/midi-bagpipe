@@ -16,7 +16,8 @@ const uint16_t fingering_positions[]={
   2287, // SOL -> LA (DO#)
   2286, // SOL -> LA (RE)
   2284, // SOL -> LA (MI)
-  2280, // SOL -> LA (FA)
+  2282, // SOL -> LA (FA)
+  2280, // SOL -> LA (FA#)
   2274, // SOL -> LA
   2272, // SOL -> LA
   2256, // LAb -> SIb (SOL)
@@ -49,6 +50,7 @@ char notes[][20]={
   "SOL -> LA (RE)",
   "SOL -> LA (MI)",
   "SOL -> LA (FA)",
+  "SOL -> LA (FA#)",
   "SOL -> LA",
   "SOL -> LA",
   "LAb -> SIb (SOL)",
@@ -83,6 +85,7 @@ const uint16_t midi_notes[]={
   67, // SOL -> LA (RE)
   67, // SOL -> LA (MI)
   67, // SOL -> LA (FA)
+  67, // SOL -> LA (FA#)
   67, // SOL -> LA
   67, // SOL -> LA
   68, // LAb -> SIb (SOL)
