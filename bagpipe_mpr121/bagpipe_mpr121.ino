@@ -28,12 +28,14 @@ const uint16_t fingering_positions[]={
   2208, // SIb -> DO
   2210, // SIb -> DO
   2176, // SI -> DO#
+  2175, // SI -> DO# (RE)
   2178, // SI -> DO#
   // segunda octava
   2174, // DO -> RE
   2172, // RE -> MI
   2168, // MI -> FA#
   2160, // FA -> SOL
+  2158, // SOL -> LA (RE)
   2144, // SOL -> LA
   2112 // LA -> SI
 };
@@ -62,12 +64,14 @@ char notes[][20]={
   "SIb -> DO",
   "SIb -> DO",
   "SI -> DO#",
+  "SI -> DO# (RE)",
   "SI -> DO#",
   // segunda octava
   "DO -> RE",
   "RE -> MI",
   "MI -> FA#",
   "FA -> SOL",
+  "SOL -> LA (RE)",
   "SOL -> LA",
   "LA -> SI",
   // silencio
@@ -98,12 +102,14 @@ const uint16_t midi_notes[]={
   70, // SIb -> DO
   70, // SIb -> DO
   71, // SI -> DO#
+  71, // SI -> DO# (RE)
   71, // SI -> DO#
   // segunda octava
   72, // DO -> RE
   74, // RE -> MI
   76, // MI -> FA#
   77, // FA -> SOL
+  79, // SOL -> LA (RE)
   79, // SOL -> LA
   81 // LA -> SI
 };
@@ -141,10 +147,10 @@ void setup () {
 void loop() {
   // Get the currently touched pads
   currtouched = cap.touched();
-  Serial.println(currtouched);
+  // Serial.println(currtouched);
 
-  uint8_t new_note = 30;
-  for (uint8_t i = 0; i < 29; i++) {
+  uint8_t new_note = 32;
+  for (uint8_t i = 0; i < 31; i++) {
     if (currtouched == fingering_positions[i]){
       new_note = i;
       break;
@@ -153,11 +159,11 @@ void loop() {
   //Serial.print("New note ");Serial.println(notes[new_note]);
 
   if (new_note != last_note) {
-    if (last_note != 30){
+    if (last_note != 32){
       //Serial.print("Stopping ");Serial.println(notes[last_note]);
       MIDI.sendNoteOff(midi_notes[last_note], 127, 1);
     }
-    if (new_note != 30){
+    if (new_note != 32){
       //Serial.print("Sending ");Serial.println(notes[new_note]);
       MIDI.sendNoteOn(midi_notes[new_note], 127, 1);
     }
