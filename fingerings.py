@@ -80,7 +80,7 @@ def get_value_from_possition(possition):
 		possitions_values.append(get_value_from_full_possition(full_possition))
 	return possitions_values
 
-values = [1, 2, 4, 8, 16, 32, 64, 128, 2048]
+values = [1, 2, 4, 8, 16, 32, 64, 128, 1024]
 
 def get_value_from_full_possition(fingers_possitions):
 		possition_value = 0
