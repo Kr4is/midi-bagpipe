@@ -47,7 +47,7 @@ void setup () {
 void loop() {
   // Get the currently touched pads
   currtouched = cap.touched();
-  Serial.println(currtouched);
+  // Serial.println(currtouched);
 
   uint8_t new_note = number_of_notes;
   for (uint8_t i = 0; i < number_of_notes - 1; i++) {
