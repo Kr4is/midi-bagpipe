@@ -1,4 +1,3 @@
-#include <Wire.h>
 #include "Adafruit_MPR121.h"
 #include <USB-MIDI.h>
 
@@ -14,40 +13,21 @@ const uint16_t midi_notes[]={
   59, 60, 61, 62, 63, 64, 64, 64, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 66, 67, 67, 67, 67, 67, 67, 67, 67, 67, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 73, 74, 75, 76, 76, 76, 77, 77, 77, 77, 77, 77, 77, 77, 78, 78, 78, 79, 79, 79, 79, 79, 79, 79, 79, 79, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 81, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 83, 84
 };
 
-// You can have up to 4 on one i2c bus but one is enough for testing!
 Adafruit_MPR121 cap = Adafruit_MPR121();
 
-// Keeps track of the last pins touched
-// so, we know when buttons are 'released'
 uint8_t last_note = 0;
 uint16_t currtouched = 0;
 
-
 void setup () {
-  Serial.begin(9600);
-
-  while (!Serial) { // needed to keep leonardo/micro from starting too fast!
-    delay(10);
-  }
-
-  Serial.println("Adafruit MPR121 Capacitive Touch sensor test");
-
-  // Default address is 0x5A, if tied to 3.3V its 0x5B
-  // If tied to SDA its 0x5C and if SCL then 0x5D
   if (!cap.begin(MPR121_I2CADDR_DEFAULT)) {
-    Serial.println("MPR121 not found, check wiring?");
     while (1);
   }
-  Serial.println("MPR121 found!");
 
-  MIDI.begin(1);
-  Serial.println("MIDI intialized!");
+  MIDI.begin(MIDI_CHANNEL_OMNI);
 }
 
 void loop() {
-  // Get the currently touched pads
   currtouched = cap.touched();
-  // Serial.println(currtouched);
 
   uint8_t new_note = number_of_notes;
   for (uint8_t i = 0; i < number_of_notes - 1; i++) {
