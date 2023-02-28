@@ -8,7 +8,7 @@ import fluidsynth
 fs = fluidsynth.Synth()
 fs.start(driver="alsa")
 fs.setting('synth.gain', 0.2)
-sfid = fs.sfload("galician-bagpipe.sf2")
+sfid = fs.sfload("galician-bagpipe-full-notes.sf2")
 fs.program_select(0, sfid, 0, 0)
 
 def getBagpipeMidiDevice():
@@ -42,10 +42,10 @@ while (crashed == False):
     readed = a.read(1)
     if readed != []:
         on = (readed[0][0][0] == 144)
-        note = readed[0][0][1]
+        note = readed[0][0][1] + 12
         velocity = readed[0][0][2]
         print(f"note {note} on {on} at velocity {velocity}")
         if (on):
-            fs.noteon(0, note, 127)
+            fs.noteon(0, note, 60)
         else:
             fs.noteoff(0, note)
