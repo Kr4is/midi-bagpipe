@@ -37,15 +37,30 @@ crashed = False
 
 print("input:")
 a = pygame.midi.Input(input_id)
-
+drones_playing = False
+last_play_state = False
+last_read = time.time()
 while (crashed == False):
     readed = a.read(1)
     if readed != []:
         on = (readed[0][0][0] == 144)
+        last_play_state = on
         note = readed[0][0][1] + 12
         velocity = readed[0][0][2]
         print(f"note {note} on {on} at velocity {velocity}")
         if (on):
+            if not drones_playing:
+                # START DRONES
+                fs.noteon(0, 48, 80)
+                fs.noteon(0, 60, 80)
             fs.noteon(0, note, 60)
+            drones_playing = True
         else:
             fs.noteoff(0, note)
+        last_read = time.time()
+    
+    if (time.time() - last_read > 0.5) and (not last_play_state) and drones_playing:
+        # STOP DRONES
+        fs.noteoff(0, 48)
+        fs.noteoff(0, 60)
+        drones_playing = False
