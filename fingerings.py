@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-# OPENPIPE FINGERINGS
-# This script creates <fingerings.h> for use in OpenPipe based on
+# midi-bagpipe fingerings generator
+# This script creates the structures for use in midi-bagpipe based on
 # fingering tables defined here in human readable form
 
 # FINGER POSITION DEFINED BY A STRING LIKE "XX XXX XXXX"
@@ -24,33 +24,34 @@
 #http://www.phys.unsw.edu.au/jw/notes.html
 
 #GAITA GALEGA
+start_note_number = 59
 galician_mastergaita=(
-	(59,("-C CCC CCCC",)), # B3
-	(60,("-C CCC CCCO",)), # C4
-	(61,("-C CCC CCOC",)), # C#4
-	(62,("-C CCC CCOO",)), # D4
-	(63,("-C CCC COCO",)), # Eb4
-	(64,("-C CCC COO-", "-C CCC COCC")), # E4
-	(65,("-C CCC O---", "-C CCC OCC-")), # F4
-	(66,("-C CCO C-OO", "-C CCO CCCC")), # F#4
-	(67,("-C CCO O---", "-C CCO CCCO")), # G4
-	(68,("-C COC ----",)), # Ab4
-	(69,("-C COO ----",)), # A4
-	(70,("-C OCO ----",)), # Bb4
-	(71,("-C OOO ----", "-O CCC CCCC", "-C OCC CCCC")), # B4
-    (72,("-O OOO ----", "-O CCC CCCO", "-C OCC ---O")), # C5
-	(73,("-O CCC CCOC",)), # C#5
-	(74,("-O CCC CCOO",)), # D5
-	(75,("-O CCC COCO",)), # Eb5
-	(76,("-O CCC COO-", "-O CCC COCC")), # E5
-	(77,("-O CCC O---",)), # F5
-	(78,("-O CCO C-OO", "-O CCO CCCC")), # F#5
-    (79,("-O CCO O---", "-O CCO CCCO")), # G5
-    (80,("-O COC ----",)), # Ab5
-    (81,("-O COO ----",)), # A5
-    (82,("-O OCO ----",)), # Bb5
-    (83,("-O OCC CCCC",)), # B5
-    (84,("-O OCC CCCO",)), # C6
+	("-C CCC CCCC",), # B4
+	("-C CCC CCCO",), # C5
+	("-C CCC CCOC",), # C#5
+	("-C CCC CCOO",), # D5
+	("-C CCC COCO",), # Eb5
+	("-C CCC COO-", "-C CCC COCC"), # E5
+	("-C CCC O---", "-C CCC OCC-"), # F5
+	("-C CCO C-OO", "-C CCO CCCC"), # F#5
+	("-C CCO O---", "-C CCO CCCO"), # G5
+	("-C COC ----",), # Ab5
+	("-C COO ----",), # A5
+	("-C OCO ----",), # Bb5
+	("-C OOO ----", "-O CCC CCCC", "-C OCC CCCC"), # B5
+    ("-O OOO ----", "-O CCC CCCO", "-C OCC ---O"), # C6
+	("-O CCC CCOC",), # C#6
+	("-O CCC CCOO",), # D6
+	("-O CCC COCO",), # Eb6
+	("-O CCC COO-", "-O CCC COCC"), # E6
+	("-O CCC O---",), # F6
+	("-O CCO C-OO", "-O CCO CCCC"), # F#6
+    ("-O CCO O---", "-O CCO CCCO"), # G6
+    ("-O COC ----",), # Ab6
+    ("-O COO ----",), # A6
+    ("-O OCO ----",), # Bb6
+    ("-O OCC CCCC",), # B6
+    ("-O OCC CCCO",), # C7
 )
 
 
@@ -92,13 +93,15 @@ def get_value_from_full_possition(fingers_possitions):
 
 def get_notes_and_possitions():
 	notes_and_possitions = []
+	start_note = start_note_number
 	for note_and_possitions in galician_mastergaita:
-		note = note_and_possitions[0]
-		possitions = note_and_possitions[1]
+		note = start_note
+		possitions = note_and_possitions
 		for possition in possitions:
 			possition_values = get_value_from_possition(possition)
 			for possition_value in possition_values:
 				notes_and_possitions.append((note, possition_value))
+		start_note+=1
 	return notes_and_possitions
 
 def main():
