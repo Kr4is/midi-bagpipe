@@ -8,7 +8,8 @@ import fluidsynth
 fs = fluidsynth.Synth()
 fs.start(driver="alsa")
 fs.setting('synth.gain', 0.2)
-sfid = fs.sfload("galician-bagpipe-full-notes.sf2")
+# sfid = fs.sfload("galician-bagpipe-full-notes.sf2")
+sfid = fs.sfload("represas_2.sf2")
 fs.program_select(0, sfid, 0, 0)
 
 def getBagpipeMidiDevice():
@@ -51,9 +52,9 @@ while (crashed == False):
         if (on):
             if not drones_playing:
                 # START DRONES
-                fs.noteon(0, 48, 80)
-                fs.noteon(0, 60, 80)
-            fs.noteon(0, note, 60)
+                fs.noteon(0, 48, 127)
+                fs.noteon(0, 60, 127)
+            fs.noteon(0, note, 127)
             drones_playing = True
         else:
             fs.noteoff(0, note)
